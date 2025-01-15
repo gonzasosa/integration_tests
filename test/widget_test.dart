@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_tests/login/login.dart';
 
 import 'package:integration_tests/main.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
+  late AuthRepository authRepository;
+
+  setUp(() {
+    authRepository = AuthRepository();
+  });
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MyApp(
+      App(
         count: 0,
+        authRepository: authRepository,
       ),
     );
 

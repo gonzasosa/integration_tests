@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_tests/main.dart';
+import 'package:integration_tests/counter/counter.dart';
+import 'package:integration_tests/login/login.dart';
 
 class CounterRobot {
-  CounterRobot({required this.tester});
+  CounterRobot({
+    required this.tester,
+    required this.authRepository,
+  });
 
   final WidgetTester tester;
+  final AuthRepository authRepository;
 
-  Future<void> show(int initialValue) {
+  Future<void> show() {
     return tester.pumpWidget(
-      MyApp(count: initialValue),
+      MaterialApp(
+        home: CounterPage(),
+      ),
     );
   }
 
