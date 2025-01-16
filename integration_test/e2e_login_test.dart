@@ -2,16 +2,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:integration_tests/login/login.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 import 'robots/login_robot.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
+
+class MockPostRepository extends Mock implements PostRepository {}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   late LoginRobot loginRobot;
   late AuthRepository authRepository;
+  late PostRepository postRepository;
 
   void setUpLoginSuccesful({
     required String email,
@@ -39,6 +43,7 @@ void main() {
 
   setUp(() {
     authRepository = MockAuthRepository();
+    postRepository = MockPostRepository();
   });
 
   group('LoginView', () {
@@ -49,7 +54,10 @@ void main() {
           tester: tester,
         );
 
-        await loginRobot.show(authRepository);
+        await loginRobot.show(
+          authRepository,
+          postRepository,
+        );
         loginRobot.assertLoginViewRendersCorrectly();
       },
     );
@@ -66,7 +74,10 @@ void main() {
 
         setUpLoginSuccesful(email: email, password: password);
 
-        await loginRobot.show(authRepository);
+        await loginRobot.show(
+          authRepository,
+          postRepository,
+        );
         await loginRobot.enterEmail(email);
         await loginRobot.enterPassword(password);
         await loginRobot.tapSubmitLoginButton();
@@ -86,7 +97,10 @@ void main() {
 
         setUpLoginFailure(email: email, password: password);
 
-        await loginRobot.show(authRepository);
+        await loginRobot.show(
+          authRepository,
+          postRepository,
+        );
         await loginRobot.enterEmail(email);
         await loginRobot.enterPassword(password);
         await loginRobot.tapSubmitLoginButton();

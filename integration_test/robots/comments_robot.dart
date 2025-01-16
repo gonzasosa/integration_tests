@@ -27,4 +27,9 @@ class CommentsRobot {
   void assertLoadingIndicator() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   }
+
+  Future<void> tapOnComment(int index) async {
+    await tester.tap(find.byKey(ValueKey(index)));
+    await tester.pumpAndSettle();
+  }
 }

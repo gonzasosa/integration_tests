@@ -38,4 +38,17 @@ class PostRepository {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     return response;
   }
+
+  /// Returns a [Comment] for the given [id].
+  Future<Comment> fetchComment(int id) async {
+    await Future<void>.delayed(const Duration(milliseconds: 250));
+    final item = postsData.first as Map<String, dynamic>;
+    return Comment(
+      id: item['id']! as int,
+      postId: item['postId']! as int,
+      name: item['name']! as String,
+      email: item['email']! as String,
+      body: item['body']! as String,
+    );
+  }
 }

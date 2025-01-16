@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integration_tests/comment_details/comment_details.dart';
 import 'package:integration_tests/comments/comments.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -80,6 +81,10 @@ class CommentListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: ValueKey(index),
+      onTap: () {
+        Navigator.of(context).push(CommentDetailsPage.route(comment.id));
+      },
       leading: Text(index.toString()),
       title: Text(comment.name),
       subtitle: Text(comment.body),

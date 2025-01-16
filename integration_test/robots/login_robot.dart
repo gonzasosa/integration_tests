@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_tests/home/home.dart';
 import 'package:integration_tests/login/login.dart';
+import 'package:post_repository/post_repository.dart';
 
 class LoginRobot {
   LoginRobot({
@@ -11,10 +12,20 @@ class LoginRobot {
 
   final WidgetTester tester;
 
-  Future<void> show(AuthRepository authRepository) async {
+  Future<void> show(
+    AuthRepository authRepository,
+    PostRepository postRepository,
+  ) async {
     await tester.pumpWidget(
-      RepositoryProvider.value(
-        value: authRepository,
+      MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(
+            value: authRepository,
+          ),
+          RepositoryProvider.value(
+            value: postRepository,
+          ),
+        ],
         child: MaterialApp(
           home: LoginPage(),
         ),
