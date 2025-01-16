@@ -1,0 +1,15 @@
+name: post_repository
+description: Package responsible to handle all the logic for the Posts domain.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:  
+  equatable: ^2.0.7
+
+dev_dependencies:
+  mocktail: ^1.0.4
+  test: ^1.24.9
+  very_good_analysis: ^7.0.0

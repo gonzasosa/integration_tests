@@ -13,6 +13,30 @@ void main() {
   late LoginRobot loginRobot;
   late AuthRepository authRepository;
 
+  void setUpLoginSuccesful({
+    required String email,
+    required String password,
+  }) {
+    when(
+      () => authRepository.login(
+        email: email,
+        password: password,
+      ),
+    ).thenAnswer((_) async {});
+  }
+
+  void setUpLoginFailure({
+    required String email,
+    required String password,
+  }) {
+    when(
+      () => authRepository.login(
+        email: email,
+        password: password,
+      ),
+    ).thenThrow(Exception('Login failed'));
+  }
+
   setUp(() {
     authRepository = MockAuthRepository();
   });
@@ -23,30 +47,26 @@ void main() {
       (tester) async {
         loginRobot = LoginRobot(
           tester: tester,
-          authRepository: authRepository,
         );
 
-        await loginRobot.show();
+        await loginRobot.show(authRepository);
         loginRobot.assertLoginViewRendersCorrectly();
       },
     );
 
     testWidgets(
-      'navigates to [CounterPage] after a succesful login',
+      'navigates to [HomePage] after a succesful login',
       (tester) async {
         const email = 'email';
         const password = 'password';
 
         loginRobot = LoginRobot(
           tester: tester,
-          authRepository: authRepository,
         );
 
-        loginRobot.setUpLoginSuccesful(
-          email: email,
-          password: password,
-        );
-        await loginRobot.show();
+        setUpLoginSuccesful(email: email, password: password);
+
+        await loginRobot.show(authRepository);
         await loginRobot.enterEmail(email);
         await loginRobot.enterPassword(password);
         await loginRobot.tapSubmitLoginButton();
@@ -62,14 +82,11 @@ void main() {
 
         loginRobot = LoginRobot(
           tester: tester,
-          authRepository: authRepository,
         );
 
-        loginRobot.setUpLoginFailure(
-          email: email,
-          password: password,
-        );
-        await loginRobot.show();
+        setUpLoginFailure(email: email, password: password);
+
+        await loginRobot.show(authRepository);
         await loginRobot.enterEmail(email);
         await loginRobot.enterPassword(password);
         await loginRobot.tapSubmitLoginButton();

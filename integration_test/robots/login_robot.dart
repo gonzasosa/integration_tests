@@ -1,44 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_tests/counter/counter.dart';
+import 'package:integration_tests/home/home.dart';
 import 'package:integration_tests/login/login.dart';
-import 'package:mocktail/mocktail.dart';
 
 class LoginRobot {
   LoginRobot({
     required this.tester,
-    required this.authRepository,
   });
 
   final WidgetTester tester;
-  final AuthRepository authRepository;
 
-  void setUpLoginSuccesful({
-    required String email,
-    required String password,
-  }) {
-    when(
-      () => authRepository.login(
-        email: email,
-        password: password,
-      ),
-    ).thenAnswer((_) async {});
-  }
-
-  void setUpLoginFailure({
-    required String email,
-    required String password,
-  }) {
-    when(
-      () => authRepository.login(
-        email: email,
-        password: password,
-      ),
-    ).thenThrow(Exception('Login failed'));
-  }
-
-  Future<void> show() async {
+  Future<void> show(AuthRepository authRepository) async {
     await tester.pumpWidget(
       RepositoryProvider.value(
         value: authRepository,
@@ -84,7 +57,7 @@ class LoginRobot {
   }
 
   void assertLoginSuccesful() {
-    expect(find.byType(CounterPage), findsOneWidget);
+    expect(find.byType(HomePage), findsOneWidget);
   }
 
   void assertLoginError() {

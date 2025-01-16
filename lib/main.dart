@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integration_tests/login/login.dart';
+import 'package:post_repository/post_repository.dart';
 
 void main() {
   runApp(
     App(
       count: 0,
       authRepository: AuthRepository(),
+      postRepository: PostRepository(),
     ),
   );
 }
@@ -16,15 +18,25 @@ class App extends StatelessWidget {
     super.key,
     required this.count,
     required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required PostRepository postRepository,
+  })  : _authRepository = authRepository,
+        _postRepository = postRepository;
 
   final int count;
   final AuthRepository _authRepository;
+  final PostRepository _postRepository;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: _authRepository,
+        ),
+        RepositoryProvider.value(
+          value: _postRepository,
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

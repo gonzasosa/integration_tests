@@ -4,14 +4,19 @@ import 'package:integration_tests/login/login.dart';
 
 import 'package:integration_tests/main.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
+class MockPostRepository extends Mock implements PostRepository {}
+
 void main() {
   late AuthRepository authRepository;
+  late PostRepository postRepository;
 
   setUp(() {
-    authRepository = AuthRepository();
+    authRepository = MockAuthRepository();
+    postRepository = MockPostRepository();
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -19,6 +24,7 @@ void main() {
       App(
         count: 0,
         authRepository: authRepository,
+        postRepository: postRepository,
       ),
     );
 

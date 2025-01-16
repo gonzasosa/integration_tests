@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integration_tests/counter/counter.dart';
+import 'package:integration_tests/home/home.dart';
 import 'package:integration_tests/login/login.dart';
 
 abstract class LoginViewKeys {
@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSuccess) {
-          Navigator.of(context).pushReplacement(CounterPage.route());
+          Navigator.of(context).pushReplacement(HomePage.route());
         } else if (state.status.isError) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
