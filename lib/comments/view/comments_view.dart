@@ -35,7 +35,7 @@ class CommentsView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Comments'),
       ),
-      body: body,
+      body: Center(child: body),
     );
   }
 }
