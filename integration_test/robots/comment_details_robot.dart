@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_tests/comment_details/comment_details.dart';
 import 'package:post_repository/post_repository.dart';
 
-class CommentsDetailsRobot {
-  CommentsDetailsRobot({required this.tester});
+class CommentDetailsRobot {
+  CommentDetailsRobot({required this.tester});
 
   final WidgetTester tester;
 

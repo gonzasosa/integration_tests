@@ -13,7 +13,7 @@ void main() {
 
   late PostRepository postRepository;
   late CommentsRobot commentsRobot;
-  late CommentsDetailsRobot commentsDetailsRobot;
+  late CommentDetailsRobot commentDetailsRobot;
 
   void setUpCommentsPage() {
     when(() => postRepository.fetchComments(
@@ -71,16 +71,16 @@ void main() {
       'can open [CommentDetailsPage] and like the comment',
       (tester) async {
         commentsRobot = CommentsRobot(tester: tester);
-        commentsDetailsRobot = CommentsDetailsRobot(tester: tester);
+        commentDetailsRobot = CommentDetailsRobot(tester: tester);
 
         setUpCommentsPage();
         setUpCommentDetails();
 
         await commentsRobot.show(postRepository);
         await commentsRobot.tapOnComment(0);
-        commentsDetailsRobot.assertCommentNotLiked();
-        await commentsDetailsRobot.tapLikeButton();
-        commentsDetailsRobot.assertCommentLiked();
+        commentDetailsRobot.assertCommentNotLiked();
+        await commentDetailsRobot.tapLikeButton();
+        commentDetailsRobot.assertCommentLiked();
       },
     );
   });
